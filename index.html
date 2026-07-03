@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VasuMart - Categories</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Mobile App Container */
+        .app-container {
+            width: 100%;
+            max-width: 414px; /* iPhone Max Width */
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 70px; /* Space for bottom nav */
+        }
+
+        /* App Header */
+        header {
+            background: #fff;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .back-btn {
+            font-size: 18px;
+            color: #002f6c;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #002f6c;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: none;
+            border-radius: 12px;
+            background: #f1f3f5;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        /* Layout for Categories */
+        .category-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            height: calc(100vh - 190px); /* Adjust based on header & bottom nav */
+        }
+
+        /* Left Sidebar (Main Categories) */
+        .sidebar {
+            width: 30%;
+            background: #f1f3f5;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-item {
+            padding: 15px 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background: #f1f3f5;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .sidebar-item .cat-icon {
+            font-size: 24px;
+        }
+
+        .sidebar-item.active {
+            background: #ffffff;
+            color: #e31e24;
+            font-weight: 600;
+            border-left: 4px solid #e31e24;
+        }
+
+        /* Right Content Area (Sub Categories & Products) */
+        .content-area {
+            width: 70%;
+            background: #ffffff;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .sub-cat-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        /* Sub Category Grid */
+        .sub-cat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .sub-cat-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #edf2f7;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sub-cat-card:active {
+            transform: scale(0.95);
+            background: #fff5f5;
+        }
+
+        .sub-cat-img {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .sub-cat-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: #444;
+            line-height: 1.3;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 414px;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+            text-decoration: none;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: #e31e24;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .trans {
+            background: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- App Header -->
+        <header>
+            <div class="header-top">
+                <button class="back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+                <div class="page-title">कैटेगरीज़ (Categories)</div>
+            </div>
+            
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="कैटेगरी या आइटम खोजें...">
+            </div>
+        </header>
+
+        <!-- Category Layout -->
+        <div class="category-layout">
+            
+            <!-- Left Sidebar (Main Categories) -->
+            <div class="sidebar">
+                <div class="sidebar-item active">
+                    <span class="cat-icon">🍪</span>
+                    <span>स्नैक्स & फूड्स</span>
+                </div>
+                <div class="sidebar-item">
+                    <span class="cat-icon">🥔</span>
+                    <span>सब्जी & फल</span>
+                </div>
+                <div class="sidebar-item">
+                    <span class="cat-icon">🥛</span>
+                    <span>डेयरी & ब्रेड</span>
+                </div>
+                <div class="sidebar-item">
+                    <span class="cat-icon">✨</span>
+                    <span>ब्यूटी & केयर</span>
+                </div>
+                <div class="sidebar-item">
+                    <span class="cat-icon">🧼</span>
+                    <span>घर की सफाई</span>
+                </div>
+                <div class="sidebar-item">
+                    <span class="cat-icon">🍼</span>
+                    <span>बेबी केयर</span>
+                </div>
+            </div>
+
+            <!-- Right Content Area -->
+            <div class="content-area">
+                <div class="sub-cat-title">पॉपुलर स्नैक्स और बिस्कुट</div>
+                
+                <div class="sub-cat-grid">
+                    <!-- Sub Cat 1 -->
+                    <div class="sub-cat-card">
+                        <div class="sub-cat-img">🍪</div>
+                        <div class="sub-cat-name">बिस्कुट & कुकीज़</div>
+                    </div>
+                    <!-- Sub Cat 2 -->
+                    <div class="sub-cat-card">
+                        <div class="sub-cat-img">🍟</div>
+                        <div class="sub-cat-name">चिप्स & नमकीन</div>
+                    </div>
+                    <!-- Sub Cat 3 -->
+                    <div class="sub-cat-card">
+                        <div class="sub-cat-img">🍫</div>
+                        <div class="sub-cat-name">चॉकलेट्स & कैन्डी</div>
+                    </div>
+                    <!-- Sub Cat 4 -->
+                    <div class="sub-cat-card">
+                        <div class="sub-cat-img">🍜</div>
+                        <div class="sub-cat-name">नूडल्स & पास्ता</div>
+                    </div>
+                    <!-- Sub Cat 5 -->
+                    <div class="sub-cat-card">
+                        <div class="sub-cat-img">🥤</div>
+                        <div class="sub-cat-name">कोल्ड ड्रिंक्स & जूस</div>
+                    </div>
+                    <!-- Sub Cat 6 -->
+                    <div class="sub-cat-card">
+                        <div class="sub-cat-img">☕</div>
+                        <div class="sub-cat-name">चाय & कॉफ़ी</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <button onclick="home()" class="trans">
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </a>
+            </button>
+            
+            <button onclick="category()" class="trans">
+                <a href="#" class="nav-item active">
+                    <i class="fa-solid fa-border-all"></i>
+                    <span>Categories</span>
+                </a>
+            </button>
+            
+            <button onclick="cart()" class="trans">
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Cart</span>
+                </a>
+            </button>
+            
+            <button onclick="profile()" class="trans">
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </button>
+        </nav>
+    </div>
+<script>
+  function home(){
+  window.location.href = "https://tanishq27k-beep.github.io/VasuMartHome/";
+}
+
+function cart(){
+  window.location.href = "https://youtube.com";
+}
+function profile(){
+  window.location.href = "https://youtube.com";
+}
+</script>
+</body>
+</html>
